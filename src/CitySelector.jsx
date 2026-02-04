@@ -1,15 +1,9 @@
 import { useEffect, useState } from "react";
-import {
-  Box,
-  FormControl,
-  MenuItem,
-  Select,
-  Typography,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const API_BASE = "https://location-selector.labs.crio.do";
 
- function CitySelector() {
+function CitySelector() {
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
@@ -28,7 +22,7 @@ const API_BASE = "https://location-selector.labs.crio.do";
       );
   }, []);
 
-  // Fetch states when country changes
+  // Fetch states
   useEffect(() => {
     if (!country) return;
 
@@ -44,7 +38,7 @@ const API_BASE = "https://location-selector.labs.crio.do";
       );
   }, [country]);
 
-  // Fetch cities when state changes
+  // Fetch cities
   useEffect(() => {
     if (!state) return;
 
@@ -68,52 +62,45 @@ const API_BASE = "https://location-selector.labs.crio.do";
 
       <Box display="flex" justifyContent="center" gap={2}>
         {/* Country */}
-        <FormControl>
-          <Select
-            value={country}
-            displayEmpty
-            onChange={(e) => setCountry(e.target.value)}
-          >
-            <MenuItem value="">Select Country</MenuItem>
-            {countries.map((c) => (
-              <MenuItem key={c} value={c}>
-                {c}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <select
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
+        >
+          <option value="">Select Country</option>
+          {countries.map((c) => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
+        </select>
 
         {/* State */}
-        <FormControl disabled={!country}>
-          <Select
-            value={state}
-            displayEmpty
-            onChange={(e) => setState(e.target.value)}
-          >
-            <MenuItem value="">Select State</MenuItem>
-            {states.map((s) => (
-              <MenuItem key={s} value={s}>
-                {s}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <select
+          value={state}
+          disabled={!country}
+          onChange={(e) => setState(e.target.value)}
+        >
+          <option value="">Select State</option>
+          {states.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
 
         {/* City */}
-        <FormControl disabled={!state}>
-          <Select
-            value={city}
-            displayEmpty
-            onChange={(e) => setCity(e.target.value)}
-          >
-            <MenuItem value="">Select City</MenuItem>
-            {cities.map((c) => (
-              <MenuItem key={c} value={c}>
-                {c}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <select
+          value={city}
+          disabled={!state}
+          onChange={(e) => setCity(e.target.value)}
+        >
+          <option value="">Select City</option>
+          {cities.map((c) => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
+        </select>
       </Box>
 
       {city && (
@@ -124,4 +111,5 @@ const API_BASE = "https://location-selector.labs.crio.do";
     </Box>
   );
 }
-export default CitySelector
+
+export default CitySelector;
